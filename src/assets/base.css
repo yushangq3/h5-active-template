@@ -1,0 +1,55 @@
+/* color palette from <https://github.com/vuejs/theme> */
+:root {
+  --t-color-bg: #E1D1EB;
+  --t-color-box-top: #D69EF6;
+  --t-color-box-bottom: #B087EE;
+  --t-color-white: #ffffff;
+  --t-color-dark: #000000;
+  --t-color-button-border: #8F60E5;
+  --t-color-bg-box: #FBF6FE;
+  --t-font-size-title: 31px;
+  --t-font-size-name: 31px;
+  --t-font-size-title-sub: 23px;
+  --t-font-size-tip: 19px;
+  --t-font-size-button-title: 35px;
+  --t-font-size-button-text: 23px;
+  --t-font-size-text: 14px;
+  --t-font-size-text-indent: 28px;
+  --t-padding-gap: 31px;
+  --t-padding-gap-content: 48px;
+  --t-box-gap: 20px;
+  --t-title-p-gap: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --t-color-bg: #E1D1EB;
+    --t-color-box-top: #D69EF6;
+    --t-color-box-bottom: #B087EE;
+    --t-color-white: #ffffff;
+    --t-color-dark: #000000;
+    --t-color-button-border: #8F60E5;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-text);
+  background: var(--color-background);
+  transition: color 0.5s, background-color 0.5s;
+  line-height: 1.6;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+    Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 15px;
+  /* text-rendering: optimizeLegibility; */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
