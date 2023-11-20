@@ -1,4 +1,4 @@
-# qrCode2template
+# h5页面初始化vue3+vite
 
 This template should help get you started developing with Vue 3 in Vite.
 
