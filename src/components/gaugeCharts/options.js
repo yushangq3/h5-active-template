@@ -5,6 +5,7 @@ export default {
           radius: '100%',  
           startAngle: 210,
           endAngle: -30,
+          center: ['50%', '60%'],
           axisLine: {
             lineStyle: {
               width: 5,
@@ -16,8 +17,8 @@ export default {
             }
           },
           pointer: {
-            width: 3,
-            length: '40%',
+            width: 2,
+            length: '52%',
             itemStyle: {
               color: 'auto'
             },
@@ -31,16 +32,16 @@ export default {
             length: 5,
             lineStyle: {
               color: '#fff',
-              width: 2
+              width: 1
             }
           },
           axisLabel: {
             color: '#999999',
-            distance: 10,
-            fontSize: 9
+            distance: 8,
+            fontSize: 5
           },
           detail: {
-            fontSize: 12,
+            fontSize: 9,
             valueAnimation: true,
             formatter: (value) => {
                 if (value>70) {
@@ -52,11 +53,11 @@ export default {
                 }
             },
             color: 'inherit',
-            offsetCenter: [0, '30%']
+            offsetCenter: [0, '25%']
           },
           data: [
             {
-              value: 72
+              value: 0
             }
           ]
         }

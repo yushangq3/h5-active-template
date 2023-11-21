@@ -8,26 +8,34 @@
 <script setup>
 import option from './options.js';
 const mychart = ref(null);
+const myEchart = ref(null);
 const props = defineProps({
     score: {type: Number, required: true},
 })
 const { proxy } = getCurrentInstance();
-const handlerMounted = function() {
-	var myChart = proxy.$echarts.init(mychart.value);
-	myChart.setOption(option);
-}
-watch(props.score, (newValue)=> {
-    if(newValue) {
-        proxy.$echarts.setOption({
-            series: [{
-                data: [{
-                    value: newValue
-                }]
+const handleSetVal = function(newValue) {
+    myEchart.value.setOption({
+        series: [{
+            data: [{
+                value: newValue
             }]
-        });
+        }]
+    });
+}
+const handleMounted = function() {
+	myEchart.value = proxy.$echarts.init(mychart.value);
+	myEchart.value.setOption(option);
+    setTimeout(() => {
+        handleSetVal(props.score);
+    }, 20);
+}
+
+watch(() => props.score, (newValue)=> {
+    if(newValue) {
+        handleSetVal(newValue);
     }
 })
-onMounted(handlerMounted)
+onMounted(handleMounted)
 </script>
 <style lang='scss' scoped>
     .chartWrap{
@@ -38,15 +46,15 @@ onMounted(handlerMounted)
         width: 214px;
         height: 214px;
         .chartbg{
-            width: 130px;
-            height: 110px;
-            margin-top: -20px;
+            width: 140px;
+            height: 120px;
+            margin-top:20px;
             overflow: hidden;
             &:after{
                 content: '';
                 display: block;
-                width:130px;
-                height: 130px;
+                width:140px;
+                height: 140px;
                 border-radius: 50%;
                 background-color: #f5ebfd;
             }

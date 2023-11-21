@@ -4,42 +4,71 @@
 			<img src="@/assets/images/logo.png" >
 			<span>芳香世家大管家</span>
 		</div>
-		<div class="action-title">
-			<div class="btn">某某某</div>
+		<div v-if="loadEnd" class="action-title" >
+			<div class="btn">{{resource.name}}</div>
 			<img src="@/assets/images/title.png">
-			<div class="sub">加油哦！再努力好好保养，你就可以发朋友圈了!</div>
-			<div class="tip">检测时间：2023-11-06 17:54:48</div>
+			<div class="sub">{{resource.encourage_text}}</div>
+			<div class="tip">{{resource.report_date}}</div>
 		</div>
-		<div class="action-box">
-			<img src="@/assets/images/skintitle0.png" class="title" alt="皮肤九项检测维度" />
-			<img src="@/assets/images/arrow.png" class="arrow" />
-			<div class="box">
-				<div class="btn">毛孔</div>
-				<div class="showArea">
-					<div class="avator"></div>
-					<gauge-charts :score="75" />
-				</div>
-				<div class="section">
-					<div class="title">护肤建议</div>
-					<div class="p">您的毛孔已达警戒,护理不当会导致粉刺、小颗粒，或偶尔存在座疮,护理 方向以温和清洁为主，切忌一心求快进行强力清洁，可能会导致不可挽回的 器质性毛孔损伤。</div>
-				</div>
-				<div class="section">
-					<div class="title">护肤小贴士</div>
-					<div class="p">您的毛孔已达警戒,护理不当会导致粉刺、小颗粒，或偶尔存在座疮,护理 方向以温和清洁为主，切忌一心求快进行强力清洁，可能会导致不可挽回的 器质性毛孔损伤。</div>
+		<template v-if="loadEnd">
+			<div class="action-box">
+				<img src="@/assets/images/skintitle0.png" class="title" alt="皮肤九项检测维度" />
+				<img src="@/assets/images/arrow.png" class="arrow" />
+				<div
+					v-for="(item,index) in resource.nine_dimensionality"
+					:key="item.name"
+					class="box"
+				>
+					<div class="btn">{{item.name}}</div>
+					<div class="showArea">
+						<div class="avator"><img :src="item.image_url" alt=""></div>
+						<gauge-charts :score="+item.percent" />
+					</div>
+					<div class="section" v-if="!!dataSource[index]">
+						<div class="title">护肤建议</div>
+						<div class="p">{{ dataSource[index][getLevleFunc(item.percent)] }}</div>
+					</div>
+					<div class="section">
+						<div class="title">护肤小贴士</div>
+						<div class="p">{{item.description}}</div>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="action-box">
+		</template>
+		
+		<div v-if="loadEnd" class="action-box">
 			<img src="@/assets/images/skintitle.png" class="title" />
 			<img src="@/assets/images/arrow.png" class="arrow" />
-			<radar-charts :score-list="[90,50, 50, 30, 33, 20, 10]"></radar-charts>
+			<radar-charts :score-list="resource.radar_map"></radar-charts>
 		</div>
 	</div>
 </template>
 <script setup lang="ts">
 import gaugeCharts from '@/components/gaugeCharts/index.vue';
 import radarCharts from '@/components/radarCharts/index.vue';
-
+import { getReportInfo } from '@/service';
+import dataSource from '@/config/data';
+const route = useRoute()
+const uuid = route.query.uuid || '';
+const loadEnd = ref(false);
+const resource = ref(null);
+if (uuid) {
+	getReportInfo({uuid}).then(res=> {
+		console.log(res);
+		loadEnd.value = true;
+		resource.value = res.data.report_data;
+		
+	})
+}
+const getLevleFunc = function(percent) {
+	if (percent > 70) {
+		return '100'
+	} else if (percent > 30) {
+		return '70'
+	} else {
+		return '30'
+	}
+}
 
 </script>
 <style scoped lang="scss">
@@ -140,6 +169,11 @@ import radarCharts from '@/components/radarCharts/index.vue';
 					height: 214px;
 					border-radius: 50%;
 					overflow: hidden;
+					img{
+						width: 100%;
+						height: 100%;
+						background-color: #B087EE;
+					}
 				}
 				.chart{
 					flex: none;
