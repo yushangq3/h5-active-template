@@ -11,14 +11,11 @@ export default defineConfig(() => {
     plugins: [
       vue(),
       AutoImport({
-        resolvers: [],
-        imports: ['vue', 'vue-router', '@vueuse/core'],
+        imports: ['vue', 'vue-router'],
         dirs: ['./src/components'],
         dts: path.resolve(pathSrc, 'auto-import.d.ts')
       }),
       Components({
-        resolvers: [
-        ],
         dts: path.resolve(pathSrc, 'components.d.ts')
       }),
     ],

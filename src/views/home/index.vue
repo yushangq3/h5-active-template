@@ -11,13 +11,13 @@
 			<div class="tip">检测时间：2023-11-06 17:54:48</div>
 		</div>
 		<div class="action-box">
-			<img src="@/assets/images/skintitle0.png" class="title" alt="皮肤九项检测维度">
-			<img src="@/assets/images/arrow.png" class="arrow">
+			<img src="@/assets/images/skintitle0.png" class="title" alt="皮肤九项检测维度" />
+			<img src="@/assets/images/arrow.png" class="arrow" />
 			<div class="box">
 				<div class="btn">毛孔</div>
 				<div class="showArea">
 					<div class="avator"></div>
-					<div class="chart"></div>
+					<gauge-charts :score="75" />
 				</div>
 				<div class="section">
 					<div class="title">护肤建议</div>
@@ -29,9 +29,17 @@
 				</div>
 			</div>
 		</div>
+		<div class="action-box">
+			<img src="@/assets/images/skintitle.png" class="title" />
+			<img src="@/assets/images/arrow.png" class="arrow" />
+			<radar-charts :score-list="[90,50, 50, 30, 33, 20, 10]"></radar-charts>
+		</div>
 	</div>
 </template>
 <script setup lang="ts">
+import gaugeCharts from '@/components/gaugeCharts/index.vue';
+import radarCharts from '@/components/radarCharts/index.vue';
+
 
 </script>
 <style scoped lang="scss">
@@ -93,6 +101,7 @@
 		background: linear-gradient(90deg, #D69EF6, #B087EE);
 		border-radius: 63px;
 		padding: 65px 18px;
+		margin-bottom: 47px;
 		img.title{
 			width: 431px;
 			height: auto;
@@ -131,6 +140,11 @@
 					height: 214px;
 					border-radius: 50%;
 					overflow: hidden;
+				}
+				.chart{
+					flex: none;
+					width: 214px;
+					height: 214px;
 				}
 			}
 			.section{

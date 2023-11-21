@@ -7,15 +7,8 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    AutoCanvas: typeof import('./components/auto-canvas/index.vue')['default']
-    ElButton: typeof import('element-plus/es')['ElButton']
-    ElCard: typeof import('element-plus/es')['ElCard']
-    ElForm: typeof import('element-plus/es')['ElForm']
-    ElFormItem: typeof import('element-plus/es')['ElFormItem']
-    ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
-    ElSlider: typeof import('element-plus/es')['ElSlider']
-    ElUpload: typeof import('element-plus/es')['ElUpload']
-    RightTool: typeof import('./components/right-tool/index.vue')['default']
+    GaugeCharts: typeof import('./components/gaugeCharts/index.vue')['default']
+    RadarCharts: typeof import('./components/radarCharts/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
