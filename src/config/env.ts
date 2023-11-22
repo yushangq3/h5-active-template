@@ -7,7 +7,7 @@ switch (envVersion) {
         Host = ''
         break
     case 'test':
-        Host = '//api.weiaon.cn'
+        Host = ''
         break
     case 'prod':
         Host = '//api.weiaon.cn'
