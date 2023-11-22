@@ -3,15 +3,19 @@
         <div class="chart" ref="mychart2"></div>
     </div>
 </template>
-<script setup>
-import option from './options.js';
+<script setup lang="ts">
+import option from './options';
 const mychart2 = ref(null);
-const myEchart2 = ref(null);
-const props = defineProps({
-    scoreList: {type: Array, required: true},
+const myEchart2 = ref<TEcharts | undefined>(undefined);
+export interface IProps {
+    scoreList: Array<TnineDimen>
+}
+const props = withDefaults(defineProps<IProps>(), {
+    scoreList: () => [],
 })
-const { proxy } = getCurrentInstance();
-const handleSetVal =function(newValue) {
+
+const $echarts = getCurrentInstance()?.appContext.config.globalProperties.$echarts;
+const handleSetVal =function(newValue: Array<any>) {
     option.radar[0].indicator = newValue.map(item => {
         return {
             name: item.name + '\n' + item.percent,
@@ -21,10 +25,10 @@ const handleSetVal =function(newValue) {
     option.series[0].data[0].value = newValue.map(item => {
         return item.percent
     })
-    myEchart2.value.setOption(option);
+    myEchart2.value?.setOption(option);
 }
 const handleMounted = function() {
-	myEchart2.value = proxy.$echarts.init(mychart2.value);
+	myEchart2.value = $echarts?.init(mychart2.value);
     setTimeout(() => {
         handleSetVal(props.scoreList);
     }, 20);

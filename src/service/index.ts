@@ -1,6 +1,6 @@
 import http from './http';
 import { app_id, app_secret } from '@/config/env';
-export function getReportInfo(params) {
+export function getReportInfo(params:TReportParams) {
     return new Promise((resolve) => {
         http.post(`/api/open/get_report_info`, {...params, app_id, app_secret})
             .then(res => {

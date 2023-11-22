@@ -15,22 +15,22 @@
 				<img src="@/assets/images/skintitle0.png" class="title" alt="皮肤九项检测维度" />
 				<img src="@/assets/images/arrow.png" class="arrow" />
 				<div
-					v-for="(item,index) in resource.nine_dimensionality"
+					v-for="item in resource.nine_dimensionality"
 					:key="item.name"
 					class="box"
 				>
 					<div class="btn">{{item.name}}</div>
 					<div class="showArea">
-						<div class="avator"><img :src="item.image_url" alt=""></div>
+						<div class="avator"><img :src="item.image_url" ></div>
 						<gauge-charts :score="+item.percent" />
 					</div>
-					<div class="section" v-if="!!dataSource[index]">
+					<div class="section" >
 						<div class="title">护肤建议</div>
-						<div class="p">{{ dataSource[index][getLevleFunc(item.percent)] }}</div>
+						<div class="p">{{ item.tip1 }}</div>
 					</div>
 					<div class="section">
 						<div class="title">护肤小贴士</div>
-						<div class="p">{{item.description}}</div>
+						<div class="p">{{ item.tip2 }}</div>
 					</div>
 				</div>
 			</div>
@@ -49,24 +49,35 @@ import radarCharts from '@/components/radarCharts/index.vue';
 import { getReportInfo } from '@/service';
 import dataSource from '@/config/data';
 const route = useRoute()
-const uuid = route.query.uuid || '';
+const uuid= (route.query.uuid || '') as string;
 const loadEnd = ref(false);
-const resource = ref(null);
+const resource = ref<TResource>({});
 if (uuid) {
-	getReportInfo({uuid}).then(res=> {
+	getReportInfo({uuid}).then((res:any)=> {
 		console.log(res);
 		loadEnd.value = true;
 		resource.value = res.data.report_data;
-		
+		resource.value.nine_dimensionality = Object.values(dataSource).map(item => {
+			const obj = res.data.report_data.nine_dimensionality.filter((item2:TnineDimen) => {
+				return item2.name === item.name;
+			})[0] || {};
+			return {
+				percent: obj.percent,
+				name: item.name,
+				image_url: obj.image_url,
+				tip1: item[getLevleFunc(obj.percent)],
+				tip2: item[200]
+			}
+		})
 	})
 }
-const getLevleFunc = function(percent) {
+const getLevleFunc = function(percent: number): TLevel {
 	if (percent > 70) {
 		return '100'
-	} else if (percent > 30) {
+	} else if (percent > 40) {
 		return '70'
 	} else {
-		return '30'
+		return '40'
 	}
 }
 

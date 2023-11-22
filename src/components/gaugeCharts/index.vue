@@ -5,16 +5,17 @@
         
     </div>
 </template>
-<script setup>
-import option from './options.js';
+<script setup lang="ts">
+import option from './options';
 const mychart = ref(null);
-const myEchart = ref(null);
+const myEchart = ref<TEcharts | undefined>(undefined);
 const props = defineProps({
     score: {type: Number, required: true},
 })
-const { proxy } = getCurrentInstance();
-const handleSetVal = function(newValue) {
-    myEchart.value.setOption({
+const $echarts = getCurrentInstance()?.appContext.config.globalProperties.$echarts;
+console.log(getCurrentInstance(), 'getCurrentInstance()')
+const handleSetVal = function(newValue: number) {
+    myEchart.value?.setOption({
         series: [{
             data: [{
                 value: newValue
@@ -23,8 +24,8 @@ const handleSetVal = function(newValue) {
     });
 }
 const handleMounted = function() {
-	myEchart.value = proxy.$echarts.init(mychart.value);
-	myEchart.value.setOption(option);
+	myEchart.value = $echarts?.init(mychart.value);
+	myEchart.value!.setOption(option);
     setTimeout(() => {
         handleSetVal(props.score);
     }, 20);

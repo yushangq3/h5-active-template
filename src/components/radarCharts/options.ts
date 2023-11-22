@@ -3,7 +3,7 @@ export default {
     radar: [
       {
         indicator: [
-          { name: '红血丝', max: 100, val: 30 },
+          { name: '红血丝', max: 100 },
           { name: '糖化', max: 100 },
           { name: '粗糙度', max: 100 },
           { name: '皱纹', max: 100 },
@@ -19,7 +19,7 @@ export default {
         splitNumber: 4,
         shape: 'circle',
         axisName: {
-          formatter: function (value) {
+          formatter: function (value: string) {
               return value;
           },
           lineHeight: 9,

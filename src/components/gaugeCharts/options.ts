@@ -43,10 +43,10 @@ export default {
           detail: {
             fontSize: 9,
             valueAnimation: true,
-            formatter: (value) => {
+            formatter: (value: number) => {
                 if (value>70) {
                     return '高风险'
-                } else if (value > 30) {
+                } else if (value > 40) {
                     return '警戒'
                 } else {
                     return '良好'
