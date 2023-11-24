@@ -38,7 +38,7 @@ export default {
           axisLabel: {
             color: '#999999',
             distance: 8,
-            fontSize: 5
+            fontSize: 6
           },
           detail: {
             fontSize: 9,

@@ -13,8 +13,9 @@
   --t-font-size-tip: 19px;
   --t-font-size-button-title: 35px;
   --t-font-size-button-text: 23px;
-  --t-font-size-text: 14px;
-  --t-font-size-text-indent: 28px;
+  --t-font-size-text: 18px;
+  --t-font-height-text: calc(var(--t-font-size-text) + 4);
+  --t-font-size-text-indent: calc(var(--t-font-size-text) * 2);
   --t-padding-gap: 31px;
   --t-padding-gap-content: 48px;
   --t-box-gap: 20px;

@@ -207,7 +207,7 @@ const getLevleFunc = function(percent: number): TLevel {
 				.p{
 					font-family: PingFang;
 					font-weight: 400;
-					line-height: 19px;
+					line-height: var(--t-font-height-text);
 					font-size: var(--t-font-size-text);
 					text-indent: var(--t-font-size-text-indent);
 				}

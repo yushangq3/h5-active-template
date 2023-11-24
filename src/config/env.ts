@@ -10,10 +10,10 @@ switch (envVersion) {
         Host = ''
         break
     case 'prod':
-        Host = '//api.weiaon.cn'
+        Host = ''
         break
     default:
-        Host = '//api.weiaon.cn'
+        Host = ''
         break
 }
 export {Host, app_id, app_secret}
