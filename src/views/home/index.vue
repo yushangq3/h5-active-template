@@ -24,7 +24,7 @@
 						<div class="avator" @click="handleImagePreview(index)">
 							<van-image
 								class="vanImg"
-								fil="contain"
+								fit="cover"
 								lazy-load
 								:src="item.image_url"
 							>
@@ -57,8 +57,6 @@
 	</div>
 </template>
 <script setup lang="ts">
-import gaugeCharts from '@/components/gaugeCharts/index.vue';
-import radarCharts from '@/components/radarCharts/index.vue';
 import { showImagePreview } from 'vant';
 import 'vant/es/image-preview/style';
 import { getReportInfo } from '@/service';
