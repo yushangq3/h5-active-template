@@ -4,24 +4,35 @@
 			<img src="@/assets/images/logo.png" >
 			<span>芳香世家大管家</span>
 		</div>
-		<div v-if="loadEnd" class="action-title" >
-			<div class="btn">{{resource.name}}</div>
-			<img src="@/assets/images/title.png">
-			<div class="sub">{{resource.encourage_text}}</div>
-			<div class="tip">{{resource.report_date}}</div>
-		</div>
 		<template v-if="loadEnd">
+			<div class="action-title" >
+				<div class="btn">{{resource.name}}</div>
+				<img src="@/assets/images/title.png">
+				<div class="sub">{{resource.encourage_text}}</div>
+				<div class="tip">{{resource.report_date}}</div>
+			</div>
 			<div class="action-box">
 				<img src="@/assets/images/skintitle0.png" class="title" alt="皮肤九项检测维度" />
 				<img src="@/assets/images/arrow.png" class="arrow" />
 				<div
-					v-for="item in resource.nine_dimensionality"
+					v-for="(item,index) in resource.nine_dimensionality"
 					:key="item.name"
 					class="box"
 				>
 					<div class="btn">{{item.name}}</div>
 					<div class="showArea">
-						<div class="avator"><img :src="item.image_url" ></div>
+						<div class="avator" @click="handleImagePreview(index)">
+							<van-image
+								class="vanImg"
+								fil="contain"
+								lazy-load
+								:src="item.image_url"
+							>
+								<template v-slot:loading>
+									<van-loading color="#B087EE" size="20" />
+								</template>
+							</van-image>
+						</div>
 						<gauge-charts :score="+item.percent" />
 					</div>
 					<div class="section" >
@@ -35,7 +46,9 @@
 				</div>
 			</div>
 		</template>
-		
+		<div v-else class="loadingWrap">
+			<img src="@/assets/images/loading.gif">
+		</div>
 		<div v-if="loadEnd" class="action-box">
 			<img src="@/assets/images/skintitle.png" class="title" />
 			<img src="@/assets/images/arrow.png" class="arrow" />
@@ -46,6 +59,8 @@
 <script setup lang="ts">
 import gaugeCharts from '@/components/gaugeCharts/index.vue';
 import radarCharts from '@/components/radarCharts/index.vue';
+import { showImagePreview } from 'vant';
+import 'vant/es/image-preview/style';
 import { getReportInfo } from '@/service';
 import dataSource from '@/config/data';
 const route = useRoute()
@@ -71,6 +86,7 @@ if (uuid) {
 		})
 	})
 }
+
 const getLevleFunc = function(percent: number): TLevel {
 	if (percent > 70) {
 		return '100'
@@ -80,7 +96,17 @@ const getLevleFunc = function(percent: number): TLevel {
 		return '40'
 	}
 }
-
+const previewImgs = computed(():string[] => {
+	return resource.value.nine_dimensionality?.map(item => {
+		return item.image_url as string;
+	}) || [];
+})
+const handleImagePreview = function(index:number) {
+	showImagePreview({
+		images: previewImgs.value,
+		startPosition: index,
+	})
+}
 </script>
 <style scoped lang="scss">
 .main{
@@ -102,6 +128,22 @@ const getLevleFunc = function(percent: number): TLevel {
 		span{
 			line-height: 1;
 			font-size: var(--t-font-size-title);
+		}
+	}
+	.loadingWrap{
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 50%;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transform: translateY(-50%);
+		z-index: 100;
+		img{
+			width: 200px;
+			height: 200px;
 		}
 	}
 	.action-title{
@@ -180,7 +222,7 @@ const getLevleFunc = function(percent: number): TLevel {
 					height: 214px;
 					border-radius: 50%;
 					overflow: hidden;
-					img{
+					.vanImg{
 						width: 100%;
 						height: 100%;
 						background-color: #B087EE;

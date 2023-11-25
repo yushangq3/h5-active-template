@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import GlobalComponentsPlugin from './plugins/vite-plugin-global-components';
+import { VantResolver } from '@vant/auto-import-resolver';
 // https://vitejs.dev/config/
 const pathSrc = path.resolve(__dirname, 'src');
 export default defineConfig(() => {
@@ -12,12 +13,14 @@ export default defineConfig(() => {
       vue(),
       AutoImport({
         imports: ['vue', 'vue-router'],
+        resolvers: [VantResolver()],
         dirs: ['./src/components'],
         dts: path.resolve(pathSrc, 'auto-import.d.ts')
       }),
       Components({
         dirs: ['./src/components'],
-        dts: path.resolve(pathSrc, 'components.d.ts')
+        dts: path.resolve(pathSrc, 'components.d.ts'),
+        resolvers: [VantResolver()]
       }),
       GlobalComponentsPlugin({
         dirs: ['./src/components'], // 存放组件的文件夹路径

@@ -1,6 +1,7 @@
 import type { ComposeOption, EChartsType } from 'echarts/core';
 import type { GaugeSeriesOption, RadarSeriesOption } from 'echarts/charts';
 import type { TitleComponentOption, TooltipComponentOption, GridComponentOption,  DatasetComponentOption } from 'echarts/components';
+
 export {}
 declare module 'vue' {
     interface ComponentCustomProperties {

@@ -10,7 +10,7 @@ export default {
             lineStyle: {
               width: 5,
               color: [
-                [0.3, '#00ff00'],
+                [0.4, '#00ff00'],
                 [0.7, '#ff9033'],
                 [1, '#fd666d']
               ]

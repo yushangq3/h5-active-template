@@ -5,6 +5,7 @@ import { createApp } from 'vue'
 
 import App from './App.vue'
 import router from './router'
+import { Lazyload  } from 'vant';
 import * as echarts from 'echarts/core';
 import { GaugeChart, RadarChart } from 'echarts/charts';
 import {
@@ -32,6 +33,6 @@ echarts.use([
   ]);
 const app = createApp(App)
 app.config.globalProperties.$echarts = echarts;
-app.use(router)
-
+app.use(router);
+app.use(Lazyload);
 app.mount('#app')
