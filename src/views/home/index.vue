@@ -33,7 +33,8 @@
 								</template>
 							</van-image>
 						</div>
-						<gauge-charts :score="+item.percent" />
+						<gauge-charts-water v-if="index === 1" :score="+item.percent" />
+						<gauge-charts v-else :score="+item.percent" />
 					</div>
 					<div class="section" >
 						<div class="title">护肤建议</div>
@@ -70,7 +71,7 @@ if (uuid) {
 		console.log(res);
 		loadEnd.value = true;
 		resource.value = res.data.report_data;
-		resource.value.nine_dimensionality = Object.values(dataSource).map(item => {
+		resource.value.nine_dimensionality = Object.values(dataSource).map((item, index) => {
 			const obj = res.data.report_data.nine_dimensionality.filter((item2:TnineDimen) => {
 				return item2.name === item.name;
 			})[0] || {};
@@ -78,7 +79,7 @@ if (uuid) {
 				percent: obj.percent,
 				name: item.name,
 				image_url: obj.image_url,
-				tip1: item[getLevleFunc(obj.percent)],
+				tip1: index === 1 ? item[getLevleFunc2(obj.percent)] : item[getLevleFunc(obj.percent)],
 				tip2: item[200]
 			}
 		})
@@ -89,6 +90,15 @@ const getLevleFunc = function(percent: number): TLevel {
 	if (percent > 70) {
 		return '100'
 	} else if (percent > 40) {
+		return '70'
+	} else {
+		return '40'
+	}
+}
+const getLevleFunc2 = function(percent: number): TLevel {
+	if (percent < 30) {
+		return '100'
+	} else if (percent < 40) {
 		return '70'
 	} else {
 		return '40'

@@ -8,10 +8,9 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     GaugeCharts: typeof import('./components/gaugeCharts/index.vue')['default']
+    GaugeChartsWater: typeof import('./components/gaugeCharts-water/index.vue')['default']
     RadarCharts: typeof import('./components/radarCharts/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    VanImage: typeof import('vant/es')['Image']
-    VanLoading: typeof import('vant/es')['Loading']
   }
 }
